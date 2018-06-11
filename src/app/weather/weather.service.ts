@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import { catchError } from 'rxjs/operators';
+import { Weather } from '../model/weather';
 
 @Injectable()
 export class WeatherService {
@@ -16,8 +17,8 @@ export class WeatherService {
 
   constructor(private http: HttpClient) { }
 
-  searchWeatherForCity(city) {
-    // implement the service
+  searchWeatherForCity(city): Observable<Weather> {
+    this.params.q = city;
+    return this.http.get(this.url, { params: this.params });
   }
-
 }

@@ -1,4 +1,4 @@
-<table class="table">
+<table class="table" *ngIf="results">
   <thead class="thead-dark">
   <tr>
     <th scope="col">City</th>
@@ -9,12 +9,11 @@
   </tr>
   </thead>
   <tbody>
-  <tr>
-    <td scope="row">London</td>
-    <td scope="row">3 &deg;</td>
-    <td scope="row">12.5 &deg;</td>
-    <td scope="row">9 &deg;</td>
-    <td scope="row">2 &deg;</td>
+  <tr *ngFor="let item of results" >
+    <td scope="row">{{item.city}}</td>
+    <ng-container *ngFor="let key of Object.keys(item.temps);">
+      <td scope="row">{{item.temps[key]}} &deg;</td>
+    </ng-container>
   </tr>
   </tbody>
 </table>
