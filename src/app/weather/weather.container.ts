@@ -19,43 +19,34 @@ export class WeatherContainer implements OnInit {
 
   ngOnInit() {
     this.store.select(weather.selectors.getWeatherResults).subscribe(results => {
-      const summary = new Array<Summary>();
-      if (results) {
-        Object.keys(results).map(id => {
-          const newSummary: Summary = {
-            city: id,
-            temps: {}
-          };
-          const data = results[id];
-          data.list.forEach((item, index) => {
-            if (index % 2 === 0) { return; }
-            const time = new Date(item.dt_txt).toLocaleTimeString();
-            newSummary.temps[time] = item.main.temp;
-          });
-          summary.push(newSummary);
-        });
-      }
-      this.weatherResults = summary;
+      this.weatherResults = this.createSummaryFromResults(results);
     });
+  }
+
+  private createSummaryFromResults(results: any) {
+    const summary = new Array<Summary>();
+    if (results) {
+      //loop through each city in results
+      Object.keys(results).map(id => {
+        const summaryLine: Summary = {
+          city: id,
+          temps: [],
+          times: []
+        };
+        //create the list of each time/temprature returned
+        results[id].list.forEach((item, index) => {
+          summaryLine.times.push(new Date(item.dt_txt));
+          summaryLine.temps.push(item.main.temp);
+        });
+        summary.push(summaryLine);
+      });
+    }
+    return summary;
   }
 
   citySearch(searchValue: string) {
     this.store.dispatch(new weather.actions.DoWeatherCitySearch(searchValue));
   }
 
-  // function format_time(date_obj) {
-  //   // formats a javascript Date object into a 12h AM/PM time string
-  //   var hour = date_obj.getHours();
-  //   var minute = date_obj.getMinutes();
-  //   var amPM = (hour > 11) ? "pm" : "am";
-  //   if(hour > 12) {
-  //     hour -= 12;
-  //   } else if(hour == 0) {
-  //     hour = "12";
-  //   }
-  //   if(minute < 10) {
-  //     minute = "0" + minute;
-  //   }
-  //   return hour + ":" + minute + amPM;
-  // }
+
 }

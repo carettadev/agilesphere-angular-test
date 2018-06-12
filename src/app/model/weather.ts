@@ -62,5 +62,6 @@ export interface Weather {
 
 export interface Summary {
   city: string;
-  temps: {[time: string]: number};
+  times: Date[];
+  temps: number[];
 }
