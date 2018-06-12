@@ -6,5 +6,5 @@ export const getWeatherState = createFeatureSelector<WeatherState>('weather');
 
 export const getWeatherResults = createSelector (
   getWeatherState,
-  (state: any) => state.weatherReducer.searchResults
+  (state: any) => state && state.WeatherReducer ? state.weatherReducer.searchResults : {}
 );

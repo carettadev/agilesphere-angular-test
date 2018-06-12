@@ -24,9 +24,9 @@ fdescribe('WeatherContainer', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(WeatherContainer);
     component = fixture.componentInstance;
-    fixture.detectChanges();
     store = TestBed.get(Store);
     spyOn(store, 'dispatch').and.callThrough();
+    fixture.detectChanges();
   });
 
   it('should create', () => {
@@ -42,10 +42,10 @@ fdescribe('WeatherContainer', () => {
   });
 
   describe('citySearch', () => {
-    // it('dispatch action correctly', () => {
-    //   const value = 'mockSearchString';
-    //   component.citySearch(value);
-    //   expect(store.dispatch).toHaveBeenCalledWith(new DoWeatherCitySearch(value));
-    // });
+    it('dispatch action correctly', () => {
+      const value = 'mockSearchString';
+      component.citySearch(value);
+      expect(store.dispatch).toHaveBeenCalledWith(new DoWeatherCitySearch(value));
+    });
   });
 });
