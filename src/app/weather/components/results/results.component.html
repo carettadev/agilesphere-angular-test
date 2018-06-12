@@ -3,7 +3,7 @@
   <tr>
     <th scope="col">City</th>
     <ng-container *ngFor="let time of times;">
-        <th scope="col">{{formatTime(time)}}</th>
+        <th scope="col">{{time | time12h}}</th>
     </ng-container>
   </tr>
   </thead>

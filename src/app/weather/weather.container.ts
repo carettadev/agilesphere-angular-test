@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as weather from './store';
 import { Summary } from '../model/weather';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-weather',
@@ -9,16 +10,21 @@ import { Summary } from '../model/weather';
   <app-search (searched)="citySearch($event)"></app-search>
   <app-results [results]="weatherResults"></app-results>  `
 })
-export class WeatherContainer implements OnInit {
+export class WeatherContainer implements OnInit, OnDestroy {
   weatherResults = [];
+  resultsObs: Subscription;
 
   constructor(private store: Store<weather.types.WeatherState>) {
   }
 
   ngOnInit() {
-    this.store.select(weather.selectors.getWeatherResults).subscribe(results => {
+    this.resultsObs = this.store.select(weather.selectors.getWeatherResults).subscribe(results => {
       this.weatherResults = this.createSummaryFromResults(results);
     });
+  }
+
+  ngOnDestroy() {
+    this.resultsObs.unsubscribe();
   }
 
   private createSummaryFromResults(results: any) {
