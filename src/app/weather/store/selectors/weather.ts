@@ -9,3 +9,8 @@ export const getWeatherResults = createSelector (
   getWeatherState,
   (state: any) => state && state.weatherReducer ? state.weatherReducer.searchResults as Weather : {}
 );
+
+export const getSearchError = createSelector (
+  getWeatherState,
+  (state: any) => state && state.weatherReducer ? state.weatherReducer.searchFailed as boolean : false
+);

@@ -1,12 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { SearchComponent } from './search.component';
 
-import Spy = jasmine.Spy;
-
-fdescribe('SearchComponent', () => {
+describe('SearchComponent', () => {
   let component: SearchComponent;
   let fixture: ComponentFixture<SearchComponent>;
 

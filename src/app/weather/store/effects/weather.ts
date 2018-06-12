@@ -7,6 +7,7 @@ import { map, mergeMap, catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { WeatherService } from '../../weather.service';
 import { Weather } from '../../../model/weather';
+import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class WeatherEffects {
@@ -15,12 +16,8 @@ export class WeatherEffects {
     doSearch$: Observable<Action> = this.actions$.pipe(
     ofType<weatherActions.DoWeatherCitySearch>(weatherActions.DO_WEATHER_CITY_SEARCH),
     mergeMap((action: weatherActions.DoWeatherCitySearch) => this.weatherService.searchWeatherForCity(action.payload)
-          .pipe(map((data: Weather) => new weatherActions.AddWeatherResults(data)))));
-
-
-      //     catchError(() => of({ type: 'LOGIN_FAILED' }))
-      //   )
-      // );
+          .pipe(map((data: Weather) => new weatherActions.AddWeatherResults(data)),
+          catchError(() => of<Action>(new weatherActions.SearchFailed())))));
 
     constructor(
        private actions$: Actions,

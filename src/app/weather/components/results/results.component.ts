@@ -7,12 +7,12 @@ import { Summary } from '../../../model/weather';
 })
 export class ResultsComponent implements OnChanges {
   @Input() results: Summary[] = [];
-  times: string[];
+  times: string[] = [];
 
   constructor() { }
 
   ngOnChanges() {
-    // constructing the times for the table column headers
+    // constructing the times for the table column headers. take those from first result if present
     const keys = Object.keys(this.results);
     this.times = keys.length > 0 ? this.results[keys[0]].times : [];
   }

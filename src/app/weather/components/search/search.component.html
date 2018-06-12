@@ -9,3 +9,4 @@
   </div>
   <button class="btn-search btn btn-primary mt-3 col-4" type="button" (click)="search(searchbox.value)">Search</button>
 </form>
+<div class="text-danger" *ngIf="showError" id="searchError">Error occured on search. City Not Found/Network Error. Try again</div>

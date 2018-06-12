@@ -7,12 +7,14 @@ import { Subscription } from 'rxjs/Subscription';
 @Component({
   selector: 'app-weather',
   template: `
-  <app-search (searched)="citySearch($event)"></app-search>
+  <app-search (searched)="citySearch($event)" [showError]="isError"></app-search>
   <app-results [results]="weatherResults"></app-results>  `
 })
 export class WeatherContainer implements OnInit, OnDestroy {
   weatherResults: Summary[] = [];
   resultsObs: Subscription;
+  errorObs: Subscription;
+  isError: boolean;
 
   constructor(private store: Store<weather.types.WeatherState>) {
   }
@@ -21,10 +23,14 @@ export class WeatherContainer implements OnInit, OnDestroy {
     this.resultsObs = this.store.select(weather.selectors.getWeatherResults).subscribe(results => {
       this.weatherResults = this.createSummaryFromResults(results);
     });
+    this.errorObs = this.store.select(weather.selectors.getSearchError).subscribe(hasErrored => {
+      this.isError = hasErrored;
+    });
   }
 
   ngOnDestroy() {
     this.resultsObs.unsubscribe();
+    this.errorObs.unsubscribe();
   }
 
   createSummaryFromResults(results: Weather): Summary[] {
