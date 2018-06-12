@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { WeatherService } from './weather.service';
 import { Store } from '@ngrx/store';
 import * as weather from './store';
 import { Summary } from '../model/weather';
-import { weatherReducer } from './store/reducers/weather';
 
 @Component({
   selector: 'app-weather',
@@ -14,7 +12,7 @@ import { weatherReducer } from './store/reducers/weather';
 export class WeatherContainer implements OnInit {
   weatherResults = [];
 
-  constructor(private weatherService: WeatherService, private store: Store<weather.types.WeatherState>) {
+  constructor(private store: Store<weather.types.WeatherState>) {
   }
 
   ngOnInit() {
@@ -26,14 +24,14 @@ export class WeatherContainer implements OnInit {
   private createSummaryFromResults(results: any) {
     const summary = new Array<Summary>();
     if (results) {
-      //loop through each city in results
+      // loop through each city in results
       Object.keys(results).map(id => {
         const summaryLine: Summary = {
           city: id,
           temps: [],
           times: []
         };
-        //create the list of each time/temprature returned
+        // create the list of each time/temprature returned
         results[id].list.forEach((item, index) => {
           summaryLine.times.push(new Date(item.dt_txt));
           summaryLine.temps.push(item.main.temp);
@@ -47,6 +45,4 @@ export class WeatherContainer implements OnInit {
   citySearch(searchValue: string) {
     this.store.dispatch(new weather.actions.DoWeatherCitySearch(searchValue));
   }
-
-
 }
