@@ -1,4 +1,4 @@
-import { City, Weather } from '../../../model/weather';
+import { Weather } from '../../../model/weather';
 import { Action } from '@ngrx/store';
 
 export interface WeatherState {

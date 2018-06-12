@@ -1,4 +1,3 @@
-import { City, Weather } from './../../../model/weather';
 import { WeatherState } from '../types/weather';
 import * as actions from '../actions/weather';
 

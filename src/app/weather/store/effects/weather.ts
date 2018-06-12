@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { Store, Action } from '@ngrx/store';
 import * as weatherActions from '../actions/weather';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { map, tap, mergeMap, catchError } from 'rxjs/operators';
+import { map, mergeMap, catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { WeatherService } from '../../weather.service';
 import { Weather } from '../../../model/weather';
