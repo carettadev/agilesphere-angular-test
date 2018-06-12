@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as weather from './store';
-import { Summary } from '../model/weather';
+import { Summary, Weather } from '../model/weather';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs/Subscription';
   <app-results [results]="weatherResults"></app-results>  `
 })
 export class WeatherContainer implements OnInit, OnDestroy {
-  weatherResults = [];
+  weatherResults: Summary[] = [];
   resultsObs: Subscription;
 
   constructor(private store: Store<weather.types.WeatherState>) {
@@ -27,7 +27,7 @@ export class WeatherContainer implements OnInit, OnDestroy {
     this.resultsObs.unsubscribe();
   }
 
-  private createSummaryFromResults(results: any) {
+  createSummaryFromResults(results: Weather): Summary[] {
     const summary = new Array<Summary>();
     if (results) {
       // loop through each city in results

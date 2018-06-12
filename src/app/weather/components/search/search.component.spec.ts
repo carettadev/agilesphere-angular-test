@@ -6,7 +6,7 @@ import { SearchComponent } from './search.component';
 
 import Spy = jasmine.Spy;
 
-describe('SearchComponent', () => {
+fdescribe('SearchComponent', () => {
   let component: SearchComponent;
   let fixture: ComponentFixture<SearchComponent>;
 
@@ -29,5 +29,9 @@ describe('SearchComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // IMPLEMENT TESTS HERE
+  it('should emit a value when search is triggered', () => {
+    const spy = spyOn(component.searched, 'emit').and.callThrough();
+    component.search('searchValue');
+    expect(component.searched.emit).toHaveBeenCalledWith('searchValue');
+  });
 });
